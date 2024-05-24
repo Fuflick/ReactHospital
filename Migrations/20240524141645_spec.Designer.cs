@@ -12,8 +12,8 @@ using ReactHospital;
 namespace ReactHospital.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20240524105714_fixes")]
-    partial class Fixes
+    [Migration("20240524141645_spec")]
+    partial class spec
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
