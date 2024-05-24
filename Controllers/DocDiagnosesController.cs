@@ -11,11 +11,11 @@ namespace ReactHospital.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProceduresController : ControllerBase
+    public class DocDiagnosesController : ControllerBase
     {
         private MyDbContext _dbContext;
 
-        public ProceduresController()
+        public DocDiagnosesController()
         {
             _dbContext = new MyDbContext();
         }
@@ -23,7 +23,7 @@ namespace ReactHospital.Controllers
         [HttpGet]
         public async Task GetAll()
         {
-            await Response.WriteAsJsonAsync(_dbContext.Procedure.ToListAsync());
+            await Response.WriteAsJsonAsync(_dbContext.DocDiagnoses.ToListAsync());
         }
         
         [HttpGet("id")]
@@ -31,15 +31,15 @@ namespace ReactHospital.Controllers
         {
             try
             {
-                var procedure = await _dbContext.Procedure.FirstOrDefaultAsync(x => x.Id == id);
-                if (procedure == null)
+                var doctor = await _dbContext.DocDiagnoses.FirstOrDefaultAsync(x => x.Id == id);
+                if (doctor == null)
                 {
                     Response.StatusCode = 404;
                     await Response.WriteAsJsonAsync(new { message = "Not Found" });
                 }
                 else
                 {
-                    await Response.WriteAsJsonAsync(procedure);
+                    await Response.WriteAsJsonAsync(doctor);
                 }
             }
             catch (Exception ex)
@@ -49,16 +49,21 @@ namespace ReactHospital.Controllers
         }
 
         [HttpPost]
-        public async Task Create(Procedure? procedure)
+        public async Task Create(DocDiagnose docDiagnose)
         {
             try
             {
-                var proc = await _dbContext.Procedure.FirstOrDefaultAsync(x => x.Id == procedure.Id);
-                if (proc == null)
+                var docDiag = await _dbContext.Doctor.FirstOrDefaultAsync(x => x.Id == docDiagnose.Id);
+                if (docDiag == null)
                 {
-                    await _dbContext.Procedure.AddAsync(procedure);
-                    await _dbContext.SaveChangesAsync();
-                    await Response.WriteAsJsonAsync(procedure);
+                    var doc = await _dbContext.Doctor.FirstOrDefaultAsync(x => x.Id == docDiagnose.DocId);
+                    var diag = await _dbContext.Diagnose.FirstOrDefaultAsync(x => x.Id == docDiagnose.DiagId);
+                    if (doc != null && diag != null)
+                    {
+                        await _dbContext.DocDiagnoses.AddAsync(docDiagnose);
+                        await _dbContext.SaveChangesAsync();
+                        await Response.WriteAsJsonAsync(docDiagnose);
+                    }
                 }
                 else
                 {
@@ -73,19 +78,19 @@ namespace ReactHospital.Controllers
         }
 
         [HttpPatch]
-        public async Task Edit(Procedure procedure)
+        public async Task Edit(DocDiagnose docDiagnose)
         {
             try
             {
-                var proc = await _dbContext.Procedure.FirstOrDefaultAsync(x => x.Id == procedure.Id);
-                if (proc == null)
+                var docDiag = await _dbContext.DocDiagnoses.FirstOrDefaultAsync(x => x.Id == docDiagnose.Id);
+                if (docDiag == null)
                 {
                     Response.StatusCode = 404;
                     await Response.WriteAsJsonAsync(new {message = "Not Found"});
                 }
 
-                proc = procedure;
-                _dbContext.Update(proc);
+                docDiag = docDiagnose;
+                _dbContext.Update(docDiag);
                 await _dbContext.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -99,12 +104,12 @@ namespace ReactHospital.Controllers
         {
             try
             {
-                var procedure = await _dbContext.Procedure.FindAsync(id);
-                if (procedure != null)
+                var docDiagnose = await _dbContext.DocDiagnoses.FindAsync(id);
+                if (docDiagnose != null)
                 {
-                    _dbContext.Procedure.Remove(procedure);
+                    _dbContext.DocDiagnoses.Remove(docDiagnose);
                     await _dbContext.SaveChangesAsync();
-                    await Response.WriteAsJsonAsync(procedure);
+                    await Response.WriteAsJsonAsync(docDiagnose);
                 }
                 else
                 {
