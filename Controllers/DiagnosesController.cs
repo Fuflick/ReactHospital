@@ -79,7 +79,8 @@ namespace ReactHospital.Controllers
                     await Response.WriteAsJsonAsync(new {message = "Not Found"});
                 }
 
-                diag = diagnose;
+                diag.Body = diagnose.Body;
+                diag.Date = diagnose.Date;
                 _dbContext.Update(diag);
                 await _dbContext.SaveChangesAsync();
             }
