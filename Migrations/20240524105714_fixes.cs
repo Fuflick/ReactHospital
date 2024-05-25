@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ReactHospital.Migrations
 {
     /// <inheritdoc />
-    public partial class fixes : Migration
+    public partial class Fixes : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

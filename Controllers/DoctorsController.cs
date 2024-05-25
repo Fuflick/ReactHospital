@@ -83,8 +83,8 @@ namespace ReactHospital.Controllers
                     Response.StatusCode = 404;
                     await Response.WriteAsJsonAsync(new {message = "Not Found"});
                 }
-
-                doc = doctor;
+                doc.Name = doctor.Name;
+                doc.Specializations = doctor.Specializations;
                 _dbContext.Update(doc);
                 await _dbContext.SaveChangesAsync();
             }

@@ -11,10 +11,9 @@
     "ReactHospital": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:7058;http://localhost:5132",
+      "applicationUrl": "http://localhost:5132",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
       }
     },
     "IIS Express": {
@@ -22,7 +21,6 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
       }
     }
   }
