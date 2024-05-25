@@ -15,6 +15,6 @@ public class MyDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         // Строка подключения
-        optionsBuilder.UseNpgsql("Host=127.0.0.1;Port=5431;Database=ReactHospital;Username=postgres;Password=123");
+        optionsBuilder.UseNpgsql("Host=172.17.0.1;Port=5432;Database=react;Username=postgres;Password=123");
     }
 }
